@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -11,6 +11,9 @@ import BookPage from "./pages/book";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
+import { callFetchAccount } from "./utils/userApi";
+import { useDispatch } from "react-redux";
+import { doFetchAction } from "./redux/account/accountSlice";
 
 const Layout = () => {
   return (
@@ -23,6 +26,19 @@ const Layout = () => {
 };
 
 function App() {
+  const dispatch = useDispatch();
+  const getCurrentUser = async () => {
+    const res = await callFetchAccount();
+    console.log(res);
+    if (res && res.data) {
+      dispatch(doFetchAction(res.data));
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: "/",

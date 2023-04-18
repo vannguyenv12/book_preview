@@ -20,10 +20,14 @@ export const accountSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload;
     },
+    doFetchAction: (state, action) => {
+      state.isAuthenticated = true;
+      state.user = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { doLoginAction } = accountSlice.actions;
+export const { doLoginAction, doFetchAction } = accountSlice.actions;
 
 export default accountSlice.reducer;
